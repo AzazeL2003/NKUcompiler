@@ -936,23 +936,24 @@ ArrayNode
 Exp
     :
     AddExp {
+        /*
         if($1->hasValue())
         {
             if($1->hasInt())
             {
                 SymbolEntry *se = new IntSymbolEntry(TypeSystem::intType,$1->getInt());
                 $$ = new Constant(se);
+                $$->changeInt(std::make_optional<int>($1->getInt()));
             }
             else
             {
                 SymbolEntry *se = new FloatSymbolEntry(TypeSystem::floatType,$1->getFloat());
                 $$ = new Constant(se);
+                $$->changeFloat(std::make_optional<int>($1->getFloat()));
             }
         }
-        else
-        {
-            $$ = $1;
-        }
+        */
+        $$ = $1;
     }
     ;
 ConstExp

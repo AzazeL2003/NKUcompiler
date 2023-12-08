@@ -55,10 +55,10 @@ void BasicBlock::remove(Instruction *inst)
     inst->getNext()->setPrev(inst->getPrev());
 }
 
-void BasicBlock::output() const
+int BasicBlock::output() const
 {
     fprintf(yyout, "B%d:", no);
-
+    int res = 0;
     if (!pred.empty())
     {
         fprintf(yyout, "%*c; preds = %%B%d", 32, '\t', pred[0]->getNo());
@@ -67,7 +67,12 @@ void BasicBlock::output() const
     }
     fprintf(yyout, "\n");
     for (auto i = head->getNext(); i != head; i = i->getNext())
+    {
         i->output();
+        if(i->getInstType()==3)
+            res = 1;
+    }
+    return res;
 }
 
 void BasicBlock::addSucc(BasicBlock *bb)

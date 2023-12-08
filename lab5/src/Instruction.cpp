@@ -6,6 +6,7 @@
 #include <optional>
 #include "Function.h"
 #include "Type.h"
+#include <cassert>
 extern FILE* yyout;
 
 Instruction::Instruction(unsigned instType, BasicBlock *insert_bb)
@@ -472,6 +473,7 @@ CallInstruction::CallInstruction(Operand *d, SymbolEntry* se, std::vector<Operan
     }
     this->se = se;
     auto p = dynamic_cast<FunctionType*>(se->getType())->getParams();
+    assert(params.size()==p.size());
     for(size_t i = 0;i<p.size();++i)
     {
         if(p[i]->isInt()&&params[i]->getType()->isFloat())

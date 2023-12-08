@@ -24,7 +24,7 @@ public:
     void insertBefore(Instruction *, Instruction *);
     void remove(Instruction *);
     bool empty() const { return head->getNext() == head;}
-    void output() const;
+    int output() const;
     bool succEmpty() const { return succ.empty(); };
     bool predEmpty() const { return pred.empty(); };
     void addSucc(BasicBlock *);

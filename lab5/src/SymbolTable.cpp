@@ -1,6 +1,7 @@
 #include "SymbolTable.h"
 #include <iostream>
 #include <sstream>
+#include <cassert>
 
 int IdentifierSymbolEntry::getInt(std::vector<int> vec)
 {
@@ -129,6 +130,7 @@ SymbolEntry* SymbolTable::lookup(std::string name)
 
 void SymbolTable::install(std::string name, SymbolEntry* entry)
 {
+    assert(symbolTable.find(name)==symbolTable.end());
     symbolTable[name] = entry;
 }
 

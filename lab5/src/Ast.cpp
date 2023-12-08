@@ -1043,6 +1043,7 @@ void ReturnStmt::genCode()
         retValue->genCode();
         Operand *src = retValue->getOperand();
         Function *func = builder->getInsertBB()->getParent();
+        assert(!dynamic_cast<FunctionType*>(func->getSymPtr()->getType())->getRetType()->isVoid());
         if(dynamic_cast<FunctionType*>(func->getSymPtr()->getType())->getRetType()->isInt()&&src->getType()->isFloat())
         {
             auto dst = new Operand(new TemporarySymbolEntry(TypeSystem::intType, SymbolTable::getLabel()));
@@ -1062,6 +1063,8 @@ void ReturnStmt::genCode()
     }
     else
     {
+        Function *func = builder->getInsertBB()->getParent();
+        assert(dynamic_cast<FunctionType*>(func->getSymPtr()->getType())->getRetType()->isVoid());
         new RetInstruction(nullptr,builder->getInsertBB());
     }
 }

@@ -2,7 +2,7 @@
 #include "Unit.h"
 #include "Type.h"
 #include <list>
-
+#include <cassert>
 extern FILE* yyout;
 
 int Function::deadinstelim()
@@ -68,15 +68,18 @@ void Function::output() const
     std::list<BasicBlock *> q;
     q.push_back(entry);
     v.insert(entry);
+    int res = 0;
     while (!q.empty())
     {
         auto bb = q.front();
         q.pop_front();
-        bb->output();
+        res += bb->output();
         if(bb->begin()==bb->end())
         {
             if(funcType->getRetType()->isInt())
                 fprintf(yyout,"ret i32 0\n");
+            else if(funcType->getRetType()->isFloat())
+                fprintf(yyout,"ret float 0.000000e+00\n");
             else 
                 fprintf(yyout,"ret\n");
         }
@@ -89,5 +92,6 @@ void Function::output() const
             }
         }
     }
+    assert(res>0);
     fprintf(yyout, "}\n");
 }
